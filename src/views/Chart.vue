@@ -1,16 +1,43 @@
 <template>
-  <div style="width: 600px">
-    <canvas id="chart"></canvas>
+  <div class="chart-wrap">
+    <button @click="pushData()" value="おす">グラフ描画</button>
+    {{ data }}
+    <Chart v-if="data[0]" :data="data[0]" />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
-import Chart from "chart.js/auto";
+import { defineComponent, reactive } from "vue";
+import Chart from "@/components/chart/Chart.vue";
 export default defineComponent({
+  components: {
+    Chart,
+  },
   setup() {
-    const renderChart = () => {
-      let ctx: HTMLElement | null = document.getElementById("chart");
-      new Chart(ctx, {
+    const data = reactive([]);
+    const pushData = () => {
+      data.splice(0);
+      const graphData: {
+        type: string;
+        data: {
+          labels: string[];
+          datasets: {
+            label: string;
+            data: number[];
+            backgroundColor: string[];
+            borderColor: string[];
+            borderWidth: number;
+          }[];
+        };
+        options: {
+          scales: {
+            yAxes: {
+              ticks: {
+                beginAtZero: boolean;
+              };
+            }[];
+          };
+        };
+      } = {
         type: "line",
         data: {
           labels: ["赤", "青", "黄色", "緑", "紫", "橙"],
@@ -49,12 +76,19 @@ export default defineComponent({
             ],
           },
         },
-      });
+      };
+      data.push(graphData);
     };
-    onMounted(() => {
-      renderChart();
-    });
+    return {
+      data,
+      pushData,
+    };
   },
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.chart-wrap {
+  width: 90%;
+  margin: 0 auto;
+}
+</style>
