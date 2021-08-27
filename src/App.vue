@@ -32,18 +32,6 @@ export default defineComponent({
       store.commit(MutationTypes.updateUserId, 5);
     };
 
-    // // グローバル変数 axios の代わりに先述の設定の色々追加された AxiosInstance を BaseRepository 経由で使用する
-    // async function getUserInfo() {
-    //   try {
-    //     await BaseRepository.get("/user/read?id=5").then((res) => {
-    //       console.log(res);
-    //       data.userData = res.data;
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-
     onMounted(() => {
       if (store.state.userId === -1) setUserId();
       // getUserInfo();

@@ -3,7 +3,7 @@
     <h1 class="font-allura">Expenses</h1>
     <nav class="nav">
       <ul>
-        <li><router-link to="/chart">Chart</router-link></li>
+        <li><router-link to="/modal">Modal</router-link></li>
       </ul>
     </nav>
   </div>
